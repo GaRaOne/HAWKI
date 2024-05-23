@@ -69,7 +69,7 @@
 			<div class= "sidebar">
 				
 				<div class="loginPanel">
-					<img id="HAWK_logo" src="public/img/logo.svg" alt="">
+					<img id="HAWK_logo" src="public/img/logo.png" alt="">
 					<h3><?php echo $translation["welcomeBackTitle"]; ?></h3>
 					<?php
 						if (file_exists(ENV_FILE_PATH)){
