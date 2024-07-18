@@ -72,8 +72,8 @@
 	<!-- Jquery v3.7.1 -->
 	<script src="public/assets/jquery/jquery.min.js"></script>
 
-	<script src="/public/assets/lz-string.min.js"></script>
-	<script src="/public/assets/crypto-js.min.js"></script>
+	<script src="public/assets/lz-string.min.js"></script>
+	<script src="public/assets/crypto-js.min.js"></script>
 
 
 	<!-- TO PREVENT FOUC WHEN RELOADING THE PAGE IN DARK MODE
@@ -91,7 +91,7 @@
 		<div class="wrapper">
 			<div class="sidebar">
 				<div class="logo">
-					<img id="HAWK_logo" src="/public/img/logo.svg" alt="">
+					<img id="HAWK_logo" src="public/img/logo.svg" alt="">
 				</div>
 				<div class="menu">
 					<details>
@@ -401,14 +401,14 @@
 		switch(activeModel){
 			case('gpt-4o'):
 			case('gpt-4-turbo-preview'):
-				streamAPI = "/api/stream-api";
+				streamAPI = "api/stream-api";
 				break;
 
 			case('intel-neural-chat-7b'):
 			case('meta-llama-3-70b-instruct'):
 			case('mixtral-8x7b-instruct'):
 			case('qwen1.5-72b-chat'):
-				streamAPI = '/api/GWDG-api';
+				streamAPI = 'api/GWDG-api';
 				break;
 		}
 	}
