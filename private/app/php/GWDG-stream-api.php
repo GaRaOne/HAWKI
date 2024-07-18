@@ -1,9 +1,15 @@
 <?php
 
+if (!defined('BOOTSTRAP_PATH')) {
+	define('BOOTSTRAP_PATH',  '../../bootstrap.php');
+}
+
+require_once BOOTSTRAP_PATH;
+
 session_start();
 if (!isset($_SESSION['username'])) {
-    http_response_code(401);
-    exit;
+	http_response_code(401);
+	exit;
 }
 
 header('Content-Type: application/json');
@@ -15,15 +21,15 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 
 // Add this block to handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(204);
-    exit;
+	http_response_code(204);
+	exit;
 }
 
 $_SESSION['last_activity'] = time();
 
 // API configuration
-$apiUrl = isset($env) ? $env['GWDG_API_URL'] : getenv('OPENAI_API_URL');
-$apiKey = isset($env) ? $env['GWDG_API_KEY'] : getenv('OPENAI_API_KEY');
+$apiUrl = isset($env) ? $env['GWDG_API_URL'] : getenv('GWDG_API_URL');
+$apiKey = isset($env) ? $env['GWDG_API_KEY'] : getenv('GWDG_API_KEY');
 
 $requestPayload = file_get_contents('php://input');
 // Decode the JSON payload into an associative array
@@ -49,16 +55,18 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Accept: application/json'
 ]);
 curl_setopt($ch, CURLOPT_WRITEFUNCTION, function($ch, $data) {
-    echo $data;
-    // ob_flush();
-    flush();
-    return strlen($data);
+	echo $data;
+	if (ob_get_level() > 0) {
+		ob_flush();
+	}
+	flush();
+	return strlen($data);
 });
 
 curl_exec($ch);
 
 if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
+	echo 'Error:' . curl_error($ch);
 }
 
 curl_close($ch);
