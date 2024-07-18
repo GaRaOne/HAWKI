@@ -91,7 +91,7 @@
 		<div class="wrapper">
 			<div class="sidebar">
 				<div class="logo">
-					<img id="HAWK_logo" src="public/img/logo.svg" alt="">
+					<img id="BTU_logo" src="public/img/logo.png" alt="">
 				</div>
 				<div class="menu">
 					<details>
