@@ -208,12 +208,14 @@
 
 					<div class="input-controlbar">
 						<select id="model-selector" onchange="OnDropdownModelSelection()">
-							<option value="gpt-4o">OpenAI GPT-4o</option>
-							<option value="gpt-4-turbo-preview">OpenAI GPT-4-Turbo</option>
-							<option value="intel-neural-chat-7b">Intel-neural-chat-7b</option>
-							<option value="meta-llama-3-70b-instruct">meta-llama-3-70b-instruct</option>
-							<option value="mixtral-8x7b-instruct">Mixtral-8x7b-instruct</option>
-							<option value="qwen1.5-72b-chat">Qwen1.5-72b-chat</option>
+						<select id="model-selector" onchange="OnDropdownModelSelection()">
+							<!-- <option value="gpt-4o">OpenAI GPT-4o</option> -->
+							<option value="gpt-4-turbo-preview">GPT4 (OpenAI)</option>
+							<!-- <option value="intel-neural-chat-7b">Intel-neural-chat-7b</option> -->
+							<option value="meta-llama-3-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
+							<!-- <option value="mixtral-8x7b-instruct">Mixtral-8x7b-instruct</option> -->
+							<!-- <option value="qwen1.5-72b-chat">Qwen1.5-72b-chat</option> -->
+						</select>
 						</select>
 
 						<div id="system-prompt-btn" onclick="ToggleSystemPrompt(true)">
