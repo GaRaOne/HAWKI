@@ -212,7 +212,8 @@
 
 				<select id="model-selector" onchange="OnDropdownModelSelection()">
 					<!-- <option value="gpt-4o">OpenAI GPT-4o</option> -->
-					<option value="gpt-4-turbo-preview">GPT4 (OpenAI)</option>
+					<!-- <option value="gpt-4-turbo-preview">GPT4 (OpenAI)</option> -->
+					<option value="gpt-4o-mini">GPT4 (OpenAI)</option>
 					<!-- <option value="intel-neural-chat-7b">Intel-neural-chat-7b</option> -->
 					<option value="meta-llama-3-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
 					<!-- <option value="mixtral-8x7b-instruct">Mixtral-8x7b-instruct</option> -->
@@ -409,7 +410,7 @@
 			SwitchModel(localStorage.getItem("definedModel"));
 		}
 		else{
-			SwitchModel("gpt-4-turbo-preview");
+			SwitchModel("gpt-4o-mini");
 		}
 		document.getElementById("model-selector").value = activeModel;
     });
@@ -424,6 +425,7 @@
 		activeModel = model;
 		switch(activeModel){
 			case('gpt-4o'):
+			case('gpt-4o-mini'):
 			case('gpt-4-turbo-preview'):
 				streamAPI = "api/stream-api";
 				break;
