@@ -210,6 +210,15 @@
 
 			<div class="input-controlbar">
 
+				<select id="model-selector" onchange="OnDropdownModelSelection()">
+					<!-- <option value="gpt-4o">OpenAI GPT-4o</option> -->
+					<option value="gpt-4-turbo-preview">GPT4 (OpenAI)</option>
+					<!-- <option value="intel-neural-chat-7b">Intel-neural-chat-7b</option> -->
+					<option value="meta-llama-3-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
+					<!-- <option value="mixtral-8x7b-instruct">Mixtral-8x7b-instruct</option> -->
+					<!-- <option value="qwen1.5-72b-chat">Qwen1.5-72b-chat</option> -->
+				</select>
+
 				<div id="system-prompt-btn" onclick="ToggleSystemPrompt(true)">
 					<svg viewBox="0 0 50 50"><path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 25 11 A 3 3 0 0 0 22 14 A 3 3 0 0 0 25 17 A 3 3 0 0 0 28 14 A 3 3 0 0 0 25 11 z M 21 21 L 21 23 L 22 23 L 23 23 L 23 36 L 22 36 L 21 36 L 21 38 L 22 38 L 23 38 L 27 38 L 28 38 L 29 38 L 29 36 L 28 36 L 27 36 L 27 21 L 26 21 L 22 21 L 21 21 z"/></svg>
 				</div>
@@ -393,6 +402,42 @@
 	});
 
 
+	let activeModel = "";
+	let streamAPI = "";
+	window.addEventListener('DOMContentLoaded', (event) => {
+		if(localStorage.getItem("definedModel")){
+			SwitchModel(localStorage.getItem("definedModel"));
+		}
+		else{
+			SwitchModel("gpt-4-turbo-preview");
+		}
+		document.getElementById("model-selector").value = activeModel;
+    });
+
+	function OnDropdownModelSelection(){
+		const dropdown = document.getElementById("model-selector");
+		SwitchModel(dropdown.value);
+		localStorage.setItem("definedModel", dropdown.value);
+	}
+
+	function SwitchModel(model){
+		activeModel = model;
+		switch(activeModel){
+			case('gpt-4o'):
+			case('gpt-4-turbo-preview'):
+				streamAPI = "/api/stream-api";
+				break;
+
+			case('intel-neural-chat-7b'):
+			case('meta-llama-3-70b-instruct'):
+			case('mixtral-8x7b-instruct'):
+			case('qwen1.5-72b-chat'):
+				streamAPI = '/api/GWDG-api';
+				break;
+		}
+	}
+
+
 	//#region HANDLE MESSAGES...
 	//----------------------------------------------------------------------------------------//
 	function handleKeydown(event){
@@ -448,7 +493,7 @@
 		document.querySelector('.limitations')?.remove();
 
 		const requestObject = {};
-		requestObject.model = 'gpt-4-turbo-preview';
+		requestObject.model = activeModel;
 		requestObject.stream = true;
 		requestObject.messages = [];
 		const messageElements = messagesElement.querySelectorAll(".message");
@@ -460,7 +505,6 @@
 		})
 
 		
-		const streamAPI = "api/stream-api";
 		postData(streamAPI, requestObject)
 		.then(stream => processStream(stream))
 		.catch(error => console.error('Error:', error));
@@ -520,7 +564,6 @@
 
 				if (done) {
 					console.log('Stream closed.');
-					document.querySelector(".message:last-child").querySelector(".message-text").innerHTML = document.querySelector(".message:last-child").querySelector(".message-text").innerHTML;
 
 					isReceivingData = false;
 					sendicon.setAttribute('d', startIcon)
