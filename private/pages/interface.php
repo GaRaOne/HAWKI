@@ -425,14 +425,14 @@
 		switch(activeModel){
 			case('gpt-4o'):
 			case('gpt-4-turbo-preview'):
-				streamAPI = "/api/stream-api";
+				streamAPI = "api/stream-api";
 				break;
 
 			case('intel-neural-chat-7b'):
 			case('meta-llama-3-70b-instruct'):
 			case('mixtral-8x7b-instruct'):
 			case('qwen1.5-72b-chat'):
-				streamAPI = '/api/GWDG-api';
+				streamAPI = 'api/GWDG-api';
 				break;
 		}
 	}
