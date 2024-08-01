@@ -1,9 +1,9 @@
 //#region FORMAT MODIFIERS
-//0. InitializeMessage: resets all variables to start message.(at request function)
-//1. Gets the received Chunk.
-//2. escape HTML to prevent injection or mistaken rendering.
-//3. format text for code blocks.
-//4. replace markdown sytaxes for interface rendering
+	//0. InitializeMessage: resets all variables to start message.(at request function)
+	//1. Gets the received Chunk.
+	//2. escape HTML to prevent injection or mistaken rendering.
+	//3. format text for code blocks.
+	//4. replace markdown sytaxes for interface rendering
 
 	let isInCodeBlock = false;
 	let lastClosingIndex = -1;
@@ -119,23 +119,16 @@
 
 			html += '</tbody>\n</table>\n';
 
-    return text;
-}
+			return html;
+		});
 
-function escapeHTML(text) {
-    return text.replace(/["&'<>]/g, function (match) {
-        return {
-            '"': '&quot;',
-            '&': '&amp;',
-            "'": '&#039;',
-            '<': '&lt;',
-            '>': '&gt;'
-        }[match];
-    });
-}
+		// Restore code blocks
+		codeBlocks.forEach((codeBlock, index) => {
+			text = text.replace(`[[[[CODEBLOCK_${index}]]]]`, `<pre><code ignore_Format>${codeBlock}</code></pre>`);
+		});
 
-function FormatMathFormulas() {
-    const element = document.querySelector(".message:last-child").querySelector(".message-text");
+		return text;
+	}
 
 	function escapeHTML(text) {
 		return text.replace(/["&'<>]/g, function (match) {
