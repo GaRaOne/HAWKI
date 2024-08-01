@@ -1,10 +1,10 @@
-	echo $data;
-	if (ob_get_level() > 0) {
-		ob_flush();
-	}
-	flush();
-	return strlen($data);
 <?php
+
+if (!defined('BOOTSTRAP_PATH')) {
+	define('BOOTSTRAP_PATH',  '../../bootstrap.php');
+}
+
+require_once BOOTSTRAP_PATH;
 
 session_start();
 if (!isset($_SESSION['username'])) {
@@ -28,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $_SESSION['last_activity'] = time();
 
 // API configuration
-$apiUrl = isset($env) ? $env['GWDG_API_URL'] : getenv('OPENAI_API_URL');
-$apiKey = isset($env) ? $env['GWDG_API_KEY'] : getenv('OPENAI_API_KEY');
+$apiUrl = isset($env) ? $env['GWDG_API_URL'] : getenv('GWDG_API_URL');
+$apiKey = isset($env) ? $env['GWDG_API_KEY'] : getenv('GWDG_API_KEY');
 
 $requestPayload = file_get_contents('php://input');
 // Decode the JSON payload into an associative array
