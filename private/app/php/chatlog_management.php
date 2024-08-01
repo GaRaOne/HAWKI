@@ -8,76 +8,61 @@ $userSpecificSalt = $encryptionSalt . $_SESSION['username'];
 <script>
 
     function saveMessagesToLocalStorage() {
-
-        const username = '<?= htmlspecialchars($_SESSION['username']) ?>';
+        const username = '<?= htmlspecialchars($_SESSION['username']) ?>'; // Use the PHP variable
         const messagesElement = document.querySelector(".messages");
         const messageElements = messagesElement.querySelectorAll(".message");
         
-        let archiveObject = { 
-            storageDate: Date.now(), 
-            messages: {} 
-        };
-
-
-        // Laden der existierenden Daten aus dem localStorage
-        const existingData = JSON.parse(localStorage.getItem('chatLog_' + username));
-        if (existingData) {
-            archiveObject = existingData;
-        }
-
-        // Neue Nachrichten für das aktuelle Thema
-        let newMessages = [];
+        let archiveObject = { messages: [] };
 
         messageElements.forEach(messageElement => {
             let messageObject = {};
-            messageObject = messageElement.dataset;
+            messageObject.role = messageElement.dataset.role;
 
-            if (messageElement.dataset.role === 'assistant') {
+            if(messageElement.dataset.role === 'assistant'){
                 messageObject.content = messageElement.querySelector(".message-text").getAttribute('rawContent');
-            } else {
+            }else{
                 messageObject.content = messageElement.querySelector(".message-text").textContent;
             }
-            newMessages.push(messageObject);
+
+            archiveObject.messages.push(messageObject);
         });
 
-        // Stringify the message objects with pretty printing to preserve newlines
-        const messageString = JSON.stringify(newMessages, null, 2);
+        // Convert messages to string
+        const messageString = JSON.stringify(archiveObject.messages);
         const compressedMessages = LZString.compressToUTF16(messageString);
+
         const salt = '<?= htmlspecialchars($userSpecificSalt) ?>';
 
-        // Ableitung eines Schlüssels aus dem Benutzernamen
+        // Derive a key from the username
         const key = CryptoJS.PBKDF2(username, CryptoJS.enc.Hex.parse(salt), {
             keySize: 256 / 32,
             iterations: 1000
         });
 
+        // Encrypt the messages
         const encrypted = CryptoJS.AES.encrypt(compressedMessages, key.toString());
         const storageDate = Date.now();
 
-        const roomStoragePackage = {
+        const storagePackage = JSON.stringify({
             encryptedData: encrypted.toString(),
-        };
+            storageDate: storageDate,
+        })
 
-        // Speichern der verschlüsselten Nachrichten unter dem entsprechenden Thema
-        archiveObject.messages[ActiveRoomID] = roomStoragePackage;
-
-        // Aktualisierte Daten in den localStorage zurückschreiben
-        localStorage.setItem('chatLog_' + username, JSON.stringify(archiveObject));
+        // Save encrypted data to local storage
+        localStorage.setItem('chatLog_' + username, storagePackage);
     }
 
+
+
     function loadMessagesFromLocalStorage() {
+
         const username = '<?= htmlspecialchars($_SESSION['username']) ?>'; // Use the PHP variable
         const storedData = localStorage.getItem('chatLog_' + username);
         if(storedData === null){
             return;
         }
         const parsedData = JSON.parse(storedData);
-        const messagesObj = parsedData.messages[ActiveRoomID];
-        if(messagesObj == null){
-            return;
-        }
-
-        const encryptedData = messagesObj.encryptedData;
+        const encryptedData = parsedData.encryptedData;
         const salt = '<?= htmlspecialchars($userSpecificSalt) ?>';
 
         if (encryptedData) {
@@ -94,26 +79,22 @@ $userSpecificSalt = $encryptionSalt . $_SESSION['username'];
                 // Decompress the messages
                 const decompressedString = LZString.decompressFromUTF16(decryptedString)
                 const messages = JSON.parse(decompressedString);
-
-                if(messages == null){
-                    return;
+                
+                if(messages != null){
+                    document.querySelector('.limitations')?.remove();
                 }
 
-                document.querySelector('.limitations')?.remove();
-                const systemMessage = document.querySelector('.message[data-role="system"]');
-                document.querySelector('.messages').removeChild(systemMessage);
-
                 messages.forEach(message => {
+
                     const messagesElement = document.querySelector(".messages");
                     const messageTemplate = document.querySelector('#message');
                     const messageElement = messageTemplate.content.cloneNode(true);
 
                     messageElement.querySelector(".message").dataset.role = message.role;
 
-                    if(message.role === "assistant"){
+                    if(message.role == "assistant"){
                         messageElement.querySelector(".message-icon").textContent = "AI";
                         messageElement.querySelector(".message-text").setAttribute('rawContent', message.content);
-
                         //FORMAT RAW TEXT AGAIN
                         const formattedContent = FormatWholeMessage(message.content);
                         messageElement.querySelector(".message-text").innerHTML = formattedContent;
@@ -128,10 +109,6 @@ $userSpecificSalt = $encryptionSalt . $_SESSION['username'];
                     hljs.highlightAll();
                     FormatMathFormulas();
                     scrollToLast(true);
-
-                    if(!document.querySelector(".message:last-child").classList.contains('me')){
-                        ShowCopyButton();
-                    }
 
                 });
             } catch (error) {
@@ -160,36 +137,14 @@ $userSpecificSalt = $encryptionSalt . $_SESSION['username'];
 
     function deleteChatLog(){
         const username = '<?= htmlspecialchars($_SESSION['username']) ?>'; // Use the PHP variable
-
-        const storageUnit = localStorage.getItem('chatLog_' + username);
-
-        if (storageUnit) {
-            const parsedData = JSON.parse(storageUnit);
-
-            if (parsedData && parsedData.messages) {
-                const messages = parsedData.messages;
-                // Remove the item corresponding to ActiveRoomID from messages
-                if (messages[ActiveRoomID]) {
-                    delete messages[ActiveRoomID];
-                    
-                    // Update the parsedData object
-                    parsedData.messages = messages;
-
-                    // Save the updated object back to localStorage
-                    localStorage.setItem('chatLog_' + username, JSON.stringify(parsedData));
-                }
-            }
-        }
-
-
-        const chatBtn = document.getElementById(ActiveRoomID + "_MenuButton");
-        load(chatBtn , ActiveRoomID + '.php');
-        closeDeletePanel();
+        localStorage.removeItem('chatLog_' + username);
+        const chatBtn = document.querySelector("#chatMenuButton");
+        load(chatBtn ,'chat.php');
     }
     function openDeletePanel(){
         document.getElementById('delete-chat-confirm').style.display = "flex";
     }
-    function closeDeletePanel(){
+    function cancelDelete(){
         document.getElementById('delete-chat-confirm').style.display = "none";
     }
 
