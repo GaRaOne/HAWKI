@@ -7,9 +7,6 @@ function update(event) {
     document.querySelector(".wrapper").style.height = window.visualViewport.height + "px";
 }
 
-
-let ActiveRoomID;
-
 function load(element, filename){
     let messagesElement = document.querySelector(".messages");
     fetch(`?page=${filename}`)
@@ -20,7 +17,6 @@ function load(element, filename){
         messagesElement.innerHTML = html;
         return;
     }).then(()=>{
-        ActiveRoomID = filename.replace('.php', '');
         CheckModals();
         if(filename == "feedback_loader.php"){
             voteHover();
