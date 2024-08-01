@@ -55,10 +55,12 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Accept: application/json'
 ]);
 curl_setopt($ch, CURLOPT_WRITEFUNCTION, function($ch, $data) {
-    echo $data;
-    // ob_flush();
-    flush();
-    return strlen($data);
+	echo $data;
+	if (ob_get_level() > 0) {
+		ob_flush();
+	}
+	flush();
+	return strlen($data);
 });
 
 curl_exec($ch);
