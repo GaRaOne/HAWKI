@@ -91,7 +91,7 @@
 		<div class="wrapper">
 			<div class="sidebar">
 				<div class="logo">
-					<img id="HAWK_logo" src="public/img/logo.svg" alt="">
+					<img id="HAWK_logo" src="public/img/logo.png" alt="">
 				</div>
 				<div class="menu">
 					<details>
@@ -210,12 +210,13 @@
 							if(isset($env) ? $env["MODEL_SELECTOR_ACTIVATION"] : getenv("MODEL_SELECTOR_ACTIVATION") && $env["MODEL_SELECTOR_ACTIVATION"] === "true"){
 								echo					
 									'<select id="model-selector" onchange="OnDropdownModelSelection()">
-										<option value="gpt-4o">OpenAI GPT-4o</option>
-										<option value="meta-llama-3.1-8b-instruct">meta-llama-3.1-8b-instruct</option>
-										<option value="meta-llama-3.1-70b-instruct">meta-llama-3.1-70b-instruct</option>
-										<option value="llama-3-sauerkrautlm-70b-instruct">Llama 3 70B Sauerkraut</option>
-										<option value="mixtral-8x7b-instruct">Mixtral-8x7b-instruct</option>
-										<option value="qwen2-72b-instruct">Qwen 2 72B Instruct</option>
+										<!-- <option value="gpt-4o">OpenAI GPT-4o</option> -->
+										<!-- <option value="gpt-4-turbo-preview">GPT4 (OpenAI)</option> -->
+										<option value="gpt-4o-mini">GPT4 (OpenAI)</option>
+										<!-- <option value="intel-neural-chat-7b">Intel-neural-chat-7b</option> -->
+										<option value="meta-llama-3-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
+										<!-- <option value="mixtral-8x7b-instruct">Mixtral-8x7b-instruct</option> -->
+										<!-- <option value="qwen1.5-72b-chat">Qwen1.5-72b-chat</option> -->
 									</select>';
 							}
 							else{
