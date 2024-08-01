@@ -366,7 +366,7 @@
 
 	//Load chat by default when the page is loaded.
 	window.addEventListener('DOMContentLoaded', (event) => {
-		const chatBtn = document.querySelector("#chat_MenuButton");
+		const chatBtn = document.querySelector("#chatMenuButton");
 		load(chatBtn ,'chat.php');
     });
 	window.addEventListener('DOMContentLoaded', cleanupStoredLogs());
@@ -407,11 +407,13 @@
 		activeModel = model;
 		switch(activeModel){
 			case('gpt-4o'):
+   			case('gpt-4o-mini'):
 				streamAPI = "api/stream-api";
 				break;
 
 			case('meta-llama-3.1-8b-instruct'):
 			case('meta-llama-3.1-70b-instruct'):
+			case('meta-llama-3-70b-instruct'):
 			case('llama-3-sauerkrautlm-70b-instruct'):
 			case('mixtral-8x7b-instruct'):
 			case('qwen2-72b-instruct'):
