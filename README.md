@@ -39,7 +39,10 @@ Display of mathematical formulas, LaTex and improvement of syntax highlighting.
 
 Dark Mode for our night owls.
 
-System prompts can now be viewed transparently.
+System prompts can now be viewed and edited.
+
+In the new version each room's chatlog is saved by default and should be deleted before starting a new chat.
+
 
 ### Security updates
 
@@ -72,11 +75,6 @@ The new version also supports the Shibboleth for user authentication. Define you
 
 To generate answers HAWKI uses the Open AI api. Follow the instructions on https://platform.openai.com/docs/introduction to generate an API key and paste it in the configuration file like instructed in chapter [Configuration](#configuration).
 
-### Chatlog Storage
-
-In the new version each room's chatlog is saved by default and should be deleted to start a new chat.
-For security reasons the chatlog is stored in the browser's localstorage and also encrypted with the username and server salt to 1. prevent access from outside of HAWKI, 2. prevent access when the same browser is shared between users.
-The stored logs will be deleted after one week by default.
 
 ## Configuration
 
@@ -91,6 +89,7 @@ To get started you need to add a configuration file to the project first. Copy t
 | LDAP_SEARCH_DN   | string  | "ou=...,dc=..."                        | Distinguished name that is used for authenticating users.                                                                                          |
 | LDAP_PORT  | string  | "..."                        | The LDAP port.                                                                                          |
 | LDAP_FILTER  | string  | "..."  | LDAP Filter. Choose the filter based on your LDAP configuration. See .env.example for more details.|
+| LDAP_DEFAULT_INITIALS  | string  | "ABC"  | User initials to use for every user. If not set, try to compute initials from LDAP displayname.|
 | SHIBBOLET_LOGIN_PATH    | string  | "..."                                  | Path to shibboleth login page.                                                                                               |
 | SHIBBOLET_LOGIN_PAGE    | string  | "..."                                  | Shibboleth login page.                                                                                               |
 | OIDC_IDP          | string  | "https://...."                         | URL of the Identity provider supporting OpenID Connect.                                                                                            |
