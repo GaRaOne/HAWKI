@@ -31,7 +31,7 @@
             //try to get cookie from last use
             if (isset($_COOKIE['lastLanguage_cookie']) && $_COOKIE['lastLanguage_cookie'] != '') {
                 $language = $_COOKIE['lastLanguage_cookie'];
-            }			
+            }
             //If theres not cookie try env default language
             elseif((file_exists(ENV_FILE_PATH) && parse_ini_file(ENV_FILE_PATH)['DEFAULT_LANGUAGE'] != '')) {
                 $env = parse_ini_file(ENV_FILE_PATH);
@@ -58,6 +58,16 @@
         $languageSanitized = preg_replace('~[^a-zA-Z_]~', '', $language);
         $langFile = file_get_contents(LANGUAGE_PATH . $languageSanitized . '.json');
         $translation = json_decode($langFile, true);
+
+        $customLangFile = CUSTOM_LANGUAGE_PATH . $languageSanitized . '.json';
+
+        if (file_exists ($customLangFile)) {
+
+            $customTranslation = json_decode(file_get_contents($customLangFile), true);
+            $translation = array_merge($translation, $customTranslation);
+
+        }
+
         $_SESSION['translation'] = $translation;
     }
 
@@ -90,6 +100,16 @@
         $_SESSION['language'] = $lang;
         $langFile = file_get_contents(RESOURCES_PATH . "language/{$lang}.json");
         $translation = json_decode($langFile, true);
+
+        $customLangFile = CUSTOM_LANGUAGE_PATH . "{$lang}.json";
+
+        if (file_exists ($customLangFile)) {
+
+            $customTranslation = json_decode(file_get_contents($customLangFile), true);
+            $translation = array_merge($translation, $customTranslation);
+
+        }
+
         $_SESSION['translation'] = $translation;
 
         setcookie('lastLanguage_cookie', $_SESSION['language'], strtotime('2038-01-01'), '/', '', true, true);
