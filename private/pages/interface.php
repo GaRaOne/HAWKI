@@ -211,12 +211,13 @@
 								echo
 									'<select id="model-selector" onchange="OnDropdownModelSelection()">
 										<!-- <option value="gpt-4o">OpenAI GPT-4o</option> -->
-										<!-- <option value="gpt-4-turbo-preview">GPT4 (OpenAI)</option> -->
 										<option value="gpt-4o-mini">GPT4 (OpenAI)</option>
-										<!-- <option value="intel-neural-chat-7b">Intel-neural-chat-7b</option> -->
-										<option value="meta-llama-3-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
-										<!-- <option value="mixtral-8x7b-instruct">Mixtral-8x7b-instruct</option> -->
-										<!-- <option value="qwen1.5-72b-chat">Qwen1.5-72b-chat</option> -->
+										
+										<!-- <option value="meta-llama-3.1-8b-instruct">meta-llama-3.1-8b-instruct</option> -->
+										<option value="meta-llama-3.1-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
+										<!-- <option value="llama-3-sauerkrautlm-70b-instruct">Llama 3 70B Sauerkraut</option> -->
+										<!-- <option value="mistral-large-instruct">Mistral Large Instruct</option> -->
+										<!-- <option value="qwen2.5-72b-instruct">Qwen 2.5 72B Instruct</option> -->
 									</select>';
 							}
 							else{
@@ -407,7 +408,6 @@
 		activeModel = model;
 		switch(activeModel){
 			case('gpt-4o'):
-   			case('gpt-4o-mini'):
 				streamAPI = "api/stream-api";
 				break;
 
@@ -415,8 +415,8 @@
 			case('meta-llama-3.1-70b-instruct'):
 			case('meta-llama-3-70b-instruct'):
 			case('llama-3-sauerkrautlm-70b-instruct'):
-			case('mixtral-8x7b-instruct'):
-			case('qwen2-72b-instruct'):
+			case('mistral-large-instruct'):
+			case('qwen2.5-72b-instruct'):
 				streamAPI = 'api/GWDG-api';
 				break;
 		}
@@ -485,6 +485,11 @@
 		messageElements.forEach(messageElement => {
 			let messageObject = {};
 			messageObject.role = messageElement.dataset.role;
+			
+			if(activeModel === 'mistral-large-instruct' && messageObject.role === 'system'){
+				messageObject.role = 'user';
+			}
+
 			messageObject.content = messageElement.querySelector(".message-text").textContent;
 			requestObject.messages.push(messageObject);
 		})
@@ -578,17 +583,16 @@
 
 				let chunks = decodedData.split("data: ");
 				chunks.forEach((chunk, index) => {
-
+					
+					if(chunk.length == 0) return false;
 					if(!isJSON(chunk)){
 						return;
 					}
-					if(chunk.indexOf('finish_reason":"stop"') > 0) return false;
-					if(chunk.indexOf('DONE') > 0) return false;
-					if(chunk.indexOf('role') > 0) return false;
-					if(chunk.length == 0) return false;
+					const jsonChunk = JSON.parse(chunk);
+					if(jsonChunk["choices"][0]["finish_reason"] != null) return false;
 					
-					rawMsg += JSON.parse(chunk)["choices"][0]["delta"].content;
-					document.querySelector(".message:last-child").querySelector(".message-text").innerHTML =  FormatChunk(JSON.parse(chunk)["choices"][0]["delta"].content);
+					rawMsg += jsonChunk["choices"][0]["delta"].content;
+					document.querySelector(".message:last-child").querySelector(".message-text").innerHTML =  FormatChunk(jsonChunk["choices"][0]["delta"].content);
 
 				})
 
