@@ -408,6 +408,7 @@
 		activeModel = model;
 		switch(activeModel){
 			case('gpt-4o'):
+			case('gpt-4o-mini'):
 				streamAPI = "api/stream-api";
 				break;
 
