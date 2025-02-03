@@ -590,8 +590,9 @@
 						return;
 					}
 					const jsonChunk = JSON.parse(chunk);
-					if(jsonChunk["choices"][0]["finish_reason"] != null) return false;
-					
+					if( !jsonChunk["choices"].length 
+					|| (jsonChunk["choices"][0]["finish_reason"] != null)) { return false; }
+										
 					rawMsg += jsonChunk["choices"][0]["delta"].content;
 					document.querySelector(".message:last-child").querySelector(".message-text").innerHTML =  FormatChunk(jsonChunk["choices"][0]["delta"].content);
 
