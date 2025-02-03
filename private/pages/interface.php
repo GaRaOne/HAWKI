@@ -210,15 +210,20 @@
 							if(isset($env) ? array_key_exists("MODEL_SELECTOR_ACTIVATION", $env) && $env["MODEL_SELECTOR_ACTIVATION"] === "true" : strtolower(getenv("MODEL_SELECTOR_ACTIVATION")) === "true"){
 								echo
 									'<select id="model-selector" onchange="OnDropdownModelSelection()">
-										<!-- <option value="gpt-4o">OpenAI GPT-4o</option> -->
-										<option value="gpt-4o-mini">GPT4 (OpenAI)</option>
-										
-										<!-- <option value="meta-llama-3.1-8b-instruct">meta-llama-3.1-8b-instruct</option> -->
+										<option value="gpt-4o">GPT4 (OpenAI)</option>
 										<option value="meta-llama-3.1-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
 										<option value="deepseek-r1">DeepSeek-R1 (GWDG)</option>
-										<!-- <option value="llama-3-sauerkrautlm-70b-instruct">Llama 3 70B Sauerkraut</option> -->
-										<!-- <option value="mistral-large-instruct">Mistral Large Instruct</option> -->
-										<!-- <option value="qwen2.5-72b-instruct">Qwen 2.5 72B Instruct</option> -->
+										
+										<!-- 
+										<option value="gpt-4o">OpenAI GPT-4o</option>
+										<option value="gpt-4o-mini">OpenAI GPT-4o Mini</option>
+										
+										<option value="meta-llama-3.1-8b-instruct">meta-llama-3.1-8b-instruct</option>
+										<option value="meta-llama-3.1-70b-instruct">meta-llama-3.1-70b-instruct</option>
+										<option value="llama-3-sauerkrautlm-70b-instruct">Llama 3 70B Sauerkraut</option>
+										<option value="mistral-large-instruct">Mistral Large Instruct</option>
+										<option value="qwen2.5-72b-instruct">Qwen 2.5 72B Instruct</option>
+										-->
 									</select>';
 							}
 							else{
