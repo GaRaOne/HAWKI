@@ -215,6 +215,7 @@
 										
 										<!-- <option value="meta-llama-3.1-8b-instruct">meta-llama-3.1-8b-instruct</option> -->
 										<option value="meta-llama-3.1-70b-instruct" selected="selected">Llama3-70b (GWDG)</option>
+										<option value="deepseek-r1">DeepSeek-R1 (GWDG)</option>
 										<!-- <option value="llama-3-sauerkrautlm-70b-instruct">Llama 3 70B Sauerkraut</option> -->
 										<!-- <option value="mistral-large-instruct">Mistral Large Instruct</option> -->
 										<!-- <option value="qwen2.5-72b-instruct">Qwen 2.5 72B Instruct</option> -->
@@ -418,7 +419,8 @@
 			case('llama-3-sauerkrautlm-70b-instruct'):
 			case('mistral-large-instruct'):
 			case('qwen2.5-72b-instruct'):
-				streamAPI = 'api/GWDG-api';
+			case('deepseek-r1'):
+					streamAPI = 'api/GWDG-api';
 				break;
 		}
 	}
