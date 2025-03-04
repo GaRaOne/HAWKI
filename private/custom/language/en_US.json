@@ -1,5 +1,6 @@
 {
     "BetaMessage": "",
+    "FAQ": "FAQ",
     "FeedBack": "Contakt",
     "guideline_Title": "Usage Guidelines for HAWKI",
     "infoPanel_Content": "<h1 class=\"headerLine\">Welcome to the Chatbot Interface of the IKMZ at BTU Cottbus-Senftenberg!</h1><p>Here, you can use the functionalities of ChatGPT, integrated via a privacy-compliant API (Application Programming Interface) called \"HAWKI.\" Usage is accessible through a web interface after logging in with your BTU account.</p><p>Before you begin, we recommend familiarizing yourself with our terms of use to ensure safe and effective utilization of our services. You will confirm the terms upon your first login and can access them anytime later in the settings (gear icon).</p><p>Would you like to learn more about handling generative AI tools at BTU? Visit our information page <a class=\"accentText\" target=\"_blank\" href=\"https://www.b-tu.de/forschung/profil/umgang-mit-ki-tools#c370480\"><b>Handling AI Tools</b></a> for useful tips and current updates.</p><p>If you have any questions or concerns, feel free to contact us at: <a class=\"accentText\" target=\"_blank\" href=\"mailto:ki-support@b-tu.de\"><b>ki-support@b-tu.de</b></a></p>",

@@ -185,6 +185,7 @@
 				</div>
 				<div class="info">
 					<a href="mailto:ki-support@b-tu.de" id="feedback"><?php echo $translation["FeedBack"]; ?></a>
+					<a href="https://www.b-tu.de/universitaet/ueber-uns/qualitaet-von-lehre-und-studium/innovative-lehrprojekte/kimint/umgang-mit-generativer-ki-in-der-hochschullehre/btuhawki#c394878" target="_blank"><?php echo $translation["FAQ"]; ?></a>
 					<a href="logout"><?php echo $translation["SignOut"]; ?></a>
 					<br>
 					<!-- CHANGE THIS PART TO ONCLICK EVENT TO LOAD THE PAGE IN MESSAGES PANEL.
