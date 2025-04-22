@@ -67,6 +67,7 @@
                         </svg>
                     </div>
                     <h1><?php echo $translation["guideline_Title"]; ?></h1>
+                    <button onclick="javascript:var originalContent = window.document.body.innerHTML;     window.document.body.innerHTML = document.querySelector('.guideline-content').innerHTML;window.print(); window.document.body.innerHTML = originalContent;"><?php echo $translation["print"]; ?></button>
                 </div>
                 <div class="content-text-container">
                     <?php echo $translation["usage_guideline"]; ?><br><br><br>
