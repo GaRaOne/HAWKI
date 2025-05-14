@@ -94,7 +94,9 @@
 					<img id="HAWK_logo" src="public/img/logo.png" alt="">
 				</div>
 				<div class="menu">
-					<a href="https://www.b-tu.de/umfragen/index.php/138618?lang=de" target="_blank"><?php echo $translation["btu_poll"]; ?></a>
+					<a href="https://www.b-tu.de/umfragen/index.php/138618?lang=de" target="_blank"><b><?php echo $translation["btu_poll"]; ?></b></a>
+					<br/>
+					<br/>
 					<details>
 						<summary>
 							<h3><?php echo $translation["Conversation"]; ?>
