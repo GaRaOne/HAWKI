@@ -217,8 +217,7 @@
 										<option value="gpt-4o"                                         >GPT4 (OpenAI)</option>
 										<option value="gemma-3-27b-it"              selected="selected">Gemma 3 (GWDG)</option>
 										<option value="deepseek-r1"                                    >DeepSeek-R1 (GWDG)</option>
-										<option value="openai-gpt-oss-120b"                            >GPT OSS (GWDG)</option>
-										<option value="mistral-large-instruct"                         >Mistral (GWDG)</option>
+										<option value="llama-3.1-sauerkrautlm-70b-instruct"            >Llama 3 (GWDG)</option>
 										<option value="qwen3-235b-a22b"                                >Qwen 3  (GWDG)</option>
 										
 										<!-- 
