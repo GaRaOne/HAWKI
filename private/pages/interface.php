@@ -215,10 +215,11 @@
 								echo
 									'<select id="model-selector" onchange="OnDropdownModelSelection()">
 										<option value="gpt-4o"                                         >GPT4 (OpenAI)</option>
-										<option value="meta-llama-3.1-70b-instruct" selected="selected">Llama3 (GWDG)</option>
+										<option value="gemma-3-27b-it"              selected="selected">Gemma 3 (GWDG)</option>
 										<option value="deepseek-r1"                                    >DeepSeek-R1 (GWDG)</option>
-										<option value="deepseek-r1-distill-llama-70b"                  >DeepSeek-Llama (GWDG)</option>
-										<option value="qwen2.5-72b-instruct"                           >Qwen (GWDG)</option>
+										<option value="openai-gpt-oss-120b"                            >GPT OSS (GWDG)</option>
+										<option value="mistral-large-instruct"                         >Mistral (GWDG)</option>
+										<option value="qwen3-235b-a22b"                                >Qwen 3  (GWDG)</option>
 										
 										<!-- 
 										<option value="gpt-4o">OpenAI GPT-4o</option>
