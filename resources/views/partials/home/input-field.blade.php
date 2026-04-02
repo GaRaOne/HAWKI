@@ -220,7 +220,7 @@
                             </div>
                         </button>
 
-
+                        @if(count($toolKitLabels) > 0)
                         <div id="tool-selection-btn" class="btn-xs tooltip-parent" onclick="openBurgerMenu('tool-selection-panel', this, false, true, true, true)">
                             <x-icon name="plus"/>
                             <div class="label tooltip" style="right: -60%; top: -2.25rem;">
@@ -228,6 +228,7 @@
                             </div>
                             @include('partials.home.components.tools-list')
                         </div>
+                        @endif
                     </div>
 
                     <div class="tools-bar"></div>
