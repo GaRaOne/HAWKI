@@ -1052,7 +1052,6 @@
     box-sizing: border-box;
     overflow: visible;
     outline: none;
-    overflow-y: auto;
     direction: rtl;
 }
 
