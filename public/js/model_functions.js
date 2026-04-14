@@ -49,6 +49,12 @@ function setModel(modelID = null){
 let paramsButtonRef = null;
 
 function openMsgParamsControlPanel(sender){
+    if(sender.classList.contains('active')){
+        closeMsgParamsControlPanel();
+        sender.classList.remove('active');
+        return;
+    }
+
     const panel = document.getElementById('model-parameters-control-panel');
     panel.querySelectorAll('.hint-box').forEach(el => {
         el.classList.remove('active');
@@ -66,7 +72,6 @@ function openMsgParamsControlPanel(sender){
     panel.style.display = 'flex';
 
     setTimeout(() => {
-        panel.style.width = `${panel.getBoundingClientRect().width + 10}px`;
         panel.style.opacity = '1';
     }, 50);
 
