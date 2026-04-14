@@ -40,7 +40,7 @@ class OpenAiStreamingRequest extends AbstractRequest
 
         // Parse the event JSON
         $jsonChunk = json_decode($chunk, true);
-        if (!$jsonChunk) {
+        if (!is_array($jsonChunk)) {
             return new AiErrorResponse('Invalid JSON chunk received');
         }
 

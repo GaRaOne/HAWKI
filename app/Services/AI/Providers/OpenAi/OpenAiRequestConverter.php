@@ -90,10 +90,6 @@ readonly class OpenAiRequestConverter
             }
         }
 
-        if($modelId === 'gpt-5'){
-            $payload["text"]["verbosity"] = "low";
-            $payload["reasoning"]["effort"] = "medium";
-        }
         return $payload;
     }
 
