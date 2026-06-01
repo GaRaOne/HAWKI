@@ -8,44 +8,60 @@ namespace App\Services\AI\Utils;
 class StreamChunkHandler
 {
     private string $jsonBuffer = '';
-    
+
     public function __construct(
         private readonly \Closure $onChunk
     )
     {
     }
-    
+
     public function handle(string $data): void
     {
-        if (!str_starts_with(trim($data), 'data: ')) {
-            $data = $this->normalizeDataChunk($data);
+        \Log::debug($data);
+        if (str_contains($data, 'data: ')) {
+            // SSE format — may include event:/comment lines before data: lines
+            foreach (explode("\n", $data) as $line) {
+                if (connection_aborted()) {
+                    break;
+                }
+                $line = rtrim($line, "\r");
+                if (!str_starts_with($line, 'data: ')) {
+                    continue;
+                }
+                $chunk = substr($line, 6);
+                if (empty($chunk) || !json_validate($chunk)) {
+                    continue;
+                }
+                ($this->onChunk)($chunk);
+            }
+            return;
         }
-        
+
+        // Google format: raw JSON without SSE data: prefix
+        $data = $this->normalizeDataChunk($data);
         foreach (explode("data: ", $data) as $chunk) {
             if (connection_aborted()) {
                 break;
             }
-            
             if (empty($chunk) || !json_validate($chunk)) {
                 continue;
             }
-            
             ($this->onChunk)($chunk);
         }
     }
-    
+
     /*
      * Helper function to translate curl return object from google to openai format
      */
     private function normalizeDataChunk(string $data): string
     {
         $this->jsonBuffer .= $data;
-        
+
         if (trim($this->jsonBuffer) === "]") {
             $this->jsonBuffer = "";
             return "";
         }
-        
+
         $output = "";
         while ($extracted = $this->extractJsonObject($this->jsonBuffer)) {
             $jsonStr = $extracted['jsonStr'];
@@ -54,13 +70,13 @@ class StreamChunkHandler
         }
         return $output;
     }
-    
+
     private function extractJsonObject(string $buffer): ?array
     {
         $openBraces = 0;
         $startFound = false;
         $startPos = 0;
-        
+
         $bufferLength = strlen($buffer);
         for ($i = 0; $i < $bufferLength; $i++) {
             $char = $buffer[$i];
@@ -81,6 +97,6 @@ class StreamChunkHandler
         }
         return null;
     }
-    
-    
+
+
 }
