@@ -1,4 +1,4 @@
-# vX.Y.Z (header will be updated by the pipeline)
+# v%%VERSION%%
 
 ### What's New
 
@@ -8,14 +8,13 @@
 
 [//]: # (- Improvements and enhancements that improve the user experience.)
 
-- AI Model errors will now be logged to the log file in addition to being printed to the screen, making it easier to debug issues in production.
-
 ### Bugfix
 
 [//]: # (- List of bugs that have been fixed in this version.)
 
-- Refactoring and code cleanup of the tool calling logic, improving readability and maintainability.
-- `bin/env dev` now no longer dies after 300 seconds, allowing for longer-running development sessions without interruption.
+### Internals
+
+[//]: # (- Changes that are mostly relevant to maintainers and contributors, such as refactors, dependency updates, CI changes, etc.)
 
 ### Deprecation
 

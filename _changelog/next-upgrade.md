@@ -1,9 +1,8 @@
-# Upgrade Guide (header will be updated by the pipeline)
+# Upgrading to version %%VERSION%%
 
 ## Overview
 
 [//]: # (Briefly describe what makes this upgrade different from a routine update)
-
 [//]: # (and why manual intervention is required.)
 
 ## Steps
