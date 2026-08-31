@@ -75,6 +75,7 @@
                 "noSystemPrompt": "No system prompt set",
                 "settingsHeading": "Settings",
                 "resetModelSettings": "Reset to model defaults",
+                "samplingDisabled": "These settings are not supported by the model.",
                 "temperature": "Temperature",
                 "temperatureInfo": "Controls the creativity of the AI's responses. Higher values (e.g. 0.8) lead to more diverse and imaginative results; lower values (e.g. 0.2) make responses more focused and predictable.",
                 "temperatureAriaLabel": "Adjust temperature",
@@ -110,6 +111,7 @@
                 "infoUnsupported": "(not supported by current model) | Click for more information",
                 "infoDefault": "Show more information about the tool",
                 "clickForInfo": "Click for more information",
+                "manageTools": "Manage tools",
                 "tools": {
                     "webFetch": "Fetch web content",
                     "webFetchDescription": "This tool enables the AI to retrieve information from the internet. Unlike web search, the AI can also access external websites to extract and analyse content.",
