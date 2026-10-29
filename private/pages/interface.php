@@ -216,9 +216,9 @@
 									'<select id="model-selector" onchange="OnDropdownModelSelection()">
 										<option value="gpt-4o"                                         >GPT4 (OpenAI)</option>
 										<option value="gemma-4-31b-it"              selected="selected">Gemma 4 (GWDG)</option>
-										<option value="deepseek-v4-flash-0731"                 >DeepSeek V4 Flash (GWDG)</option>
-										<option value="meta-llama-3.1-8b-instruct"            >Llama 3.1 (GWDG)</option>
-										<option value="qwen3.5-397b-a17b"                 >Qwen 3.5 (GWDG)</option>
+										<option value="deepseek-v4-flash-0731"                         >DeepSeek V4 Flash (GWDG)</option>
+										<option value="meta-llama-3.1-8b-instruct"                     >Llama 3.1 (GWDG)</option>
+										<option value="qwen3.8-27b"                                    >Qwen 3.8 (GWDG)</option>
 									</select>';
 							}
 							else{
