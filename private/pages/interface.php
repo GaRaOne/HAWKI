@@ -215,21 +215,10 @@
 								echo
 									'<select id="model-selector" onchange="OnDropdownModelSelection()">
 										<option value="gpt-4o"                                         >GPT4 (OpenAI)</option>
-										<option value="gemma-3-27b-it"              selected="selected">Gemma 3 (GWDG)</option>
-										<option value="deepseek-r1"                                    >DeepSeek-R1 (GWDG)</option>
-										<option value="llama-3.1-sauerkrautlm-70b-instruct"            >Llama 3 (GWDG)</option>
-										<option value="qwen3-235b-a22b"                                >Qwen 3  (GWDG)</option>
-										
-										<!-- 
-										<option value="gpt-4o">OpenAI GPT-4o</option>
-										<option value="gpt-4o-mini">OpenAI GPT-4o Mini</option>
-										
-										<option value="meta-llama-3.1-8b-instruct">meta-llama-3.1-8b-instruct</option>
-										<option value="meta-llama-3.1-70b-instruct">meta-llama-3.1-70b-instruct</option>
-										<option value="llama-3-sauerkrautlm-70b-instruct">Llama 3 70B Sauerkraut</option>
-										<option value="mistral-large-instruct">Mistral Large Instruct</option>
-										<option value="qwen2.5-72b-instruct">Qwen 2.5 72B Instruct</option>
-										-->
+										<option value="gemma-4-31b-it"              selected="selected">Gemma 4 (GWDG)</option>
+										<option value="deepseek-v4-flash-0731"                 >DeepSeek V4 Flash (GWDG)</option>
+										<option value="meta-llama-3.1-8b-instruct"            >Llama 3.1 (GWDG)</option>
+										<option value="qwen3.5-397b-a17b"                 >Qwen 3.5 (GWDG)</option>
 									</select>';
 							}
 							else{
@@ -398,14 +387,16 @@
 
 
 
-	let activeModel = "gpt-4o";
+	let activeModel = "gemma-4-31b-it";
 	let streamAPI = "";
+	const availableModels = ['gpt-4o', 'gemma-4-31b-it', 'deepseek-v4-flash-0731', 'meta-llama-3.1-8b-instruct', 'qwen3.5-397b-a17b'];
 	window.addEventListener('DOMContentLoaded', (event) => {
-		if(localStorage.getItem("definedModel")){
-			SwitchModel(localStorage.getItem("definedModel"));
+		const storedModel = localStorage.getItem("definedModel");
+		if(storedModel && availableModels.includes(storedModel)){
+			SwitchModel(storedModel);
 		}
 		else{
-			SwitchModel("gpt-4o");
+			SwitchModel(activeModel);
 		}
 		document.getElementById("model-selector").value = activeModel;
     });
@@ -424,15 +415,12 @@
 				streamAPI = "api/stream-api";
 				break;
 
+			case('gemma-4-31b-it'):
+			case('deepseek-v4-flash-0731'):
 			case('meta-llama-3.1-8b-instruct'):
-			case('meta-llama-3.1-70b-instruct'):
-			case('meta-llama-3-70b-instruct'):
-			case('llama-3-sauerkrautlm-70b-instruct'):
-			case('mistral-large-instruct'):
-			case('qwen2.5-72b-instruct'):
-			case('deepseek-r1'):
+			case('qwen3.5-397b-a17b'):
 					streamAPI = 'api/GWDG-api';
-				break;
+					break;
 		}
 	}
 
@@ -499,11 +487,6 @@
 		messageElements.forEach(messageElement => {
 			let messageObject = {};
 			messageObject.role = messageElement.dataset.role;
-			
-			if(activeModel === 'mistral-large-instruct' && messageObject.role === 'system'){
-				messageObject.role = 'user';
-			}
-
 			messageObject.content = messageElement.querySelector(".message-text").textContent;
 			requestObject.messages.push(messageObject);
 		})
